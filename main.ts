@@ -1,4 +1,13 @@
-let seconds = 0
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+	
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    if (mole.overlapsWith(hammer)) {
+    	
+    }
+})
+let mole: Sprite = null
+let hammer: Sprite = null
 scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -121,34 +130,35 @@ scene.setBackgroundImage(img`
     7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
     7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
     `)
-let mySprite = sprites.create(img`
+hammer = sprites.create(img`
     .........................
     .........................
     .........................
-    .........cccccc..........
-    ........ccbbbbbcc........
-    .......ccbbbbbbbbcc......
-    .......cbbbbbbbbbbbcc....
-    ......cbbbbbbbbbbddbbff..
-    ......cbbbbbccbbddbcccff.
-    ......cbbbbddcbddbddbbbff
-    ......cbbbbddcbdbddccccbf
-    ......ccbbbbccddbdcccccbf
-    ......fccbbbbbdbdbcccccbf
-    ......fccccbbbdcdccccccbc
-    ......fbbccccbdcbccccccbc
-    ......fbbbbcccbcbbbccccbc
-    .......ffbbbbcbcbbbbbccbc
-    .........ffbbbbcbbbbbbbbc
-    ...........ffbbcbbbbbbff.
-    ............cffcbbbbffc..
-    ............cbcffbffc....
-    ............cbc.ffc......
-    ............cbc..........
-    ............cbc..........
-    ............cbc..........
+    .........ffffff..........
+    ........feeeeeeff........
+    .......feeeeeeeeeff......
+    .......feeeeeeeeeeeff....
+    ......ffeeeeeeeeeedffff..
+    ......fefffeeeeeedfeeeff.
+    ......feeeffffeedfdeeeeff
+    ......feeeeeeffdfdeeeeeef
+    ......feeeeeeefffdeeeeeef
+    ......feeeeeeeefdeeeeeeef
+    ......feeeeeeeefdeeeeeeef
+    ......feeeeeeeefeeeeeeeef
+    ......feeeeeeeefeeeeeeeef
+    .......ffeeeeeefeeeeeeeef
+    .........ffeeeefeeeeeeeef
+    ...........ffeefeeeeeeff.
+    ............ffffeeeeff...
+    ............fefffeff.....
+    ............fef.ff.......
+    ............fef..........
+    ............fef..........
+    ............fef..........
     `, SpriteKind.Player)
-let mole = sprites.create(img`
+controller.moveSprite(hammer)
+mole = sprites.create(img`
     . . c c c c . . 
     . c e e e e c . 
     c e e e e e e c 
@@ -165,5 +175,5 @@ for (let index = 0; index < 10; index++) {
     mole.setPosition(randint(1, 160), randint(80, 120))
 }
 game.onUpdateInterval(100, function () {
-    seconds += 1
+    info.changeScoreBy(1)
 })
