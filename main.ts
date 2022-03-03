@@ -166,5 +166,4 @@ for (let index = 0; index < 10; index++) {
 }
 game.onUpdateInterval(100, function () {
     seconds += 1
-    game.splash(seconds)
 })
