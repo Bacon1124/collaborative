@@ -1,13 +1,35 @@
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-	
+    whac()
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    if (mole.overlapsWith(hammer)) {
-    	
+function whac () {
+    splat = sprites.create(img`
+        . . . . . . . . b b . . . . . . 
+        . . . . . . . . b b . . . . . . 
+        . . . b b b . . . . . . . . . . 
+        . . b d d b . . . . . . . b b . 
+        . b d d d b . . . . . . b d d b 
+        . b d d b . . . . b b . b d d b 
+        . b b b . . . . . b b . . b b . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . b b b d d d d d d b b b . . 
+        . b d c c c b b b b c c d d b . 
+        b d d c b . . . . . b c c d d b 
+        c d d b b . . . . . . b c d d c 
+        c b d d d b b . . . . b d d c c 
+        . c c b d d d d b . c c c c c c 
+        . . . c c c c c c . . . . . . . 
+        `, SpriteKind.Player)
+    if (!(splat.overlapsWith(mole))) {
+        splat.destroy()
     }
+}
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
+    statusbar.value += -1
 })
+let splat: Sprite = null
+let statusbar: StatusBarSprite = null
 let mole: Sprite = null
-let hammer: Sprite = null
 scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -130,33 +152,7 @@ scene.setBackgroundImage(img`
     7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
     7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
     `)
-hammer = sprites.create(img`
-    .........................
-    .........................
-    .........................
-    .........ffffff..........
-    ........feeeeeeff........
-    .......feeeeeeeeeff......
-    .......feeeeeeeeeeeff....
-    ......ffeeeeeeeeeedffff..
-    ......fefffeeeeeedfeeeff.
-    ......feeeffffeedfdeeeeff
-    ......feeeeeeffdfdeeeeeef
-    ......feeeeeeefffdeeeeeef
-    ......feeeeeeeefdeeeeeeef
-    ......feeeeeeeefdeeeeeeef
-    ......feeeeeeeefeeeeeeeef
-    ......feeeeeeeefeeeeeeeef
-    .......ffeeeeeefeeeeeeeef
-    .........ffeeeefeeeeeeeef
-    ...........ffeefeeeeeeff.
-    ............ffffeeeeff...
-    ............fefffeff.....
-    ............fef.ff.......
-    ............fef..........
-    ............fef..........
-    ............fef..........
-    `, SpriteKind.Player)
+let hammer = sprites.create(assets.image`hammer`, SpriteKind.Player)
 controller.moveSprite(hammer)
 mole = sprites.create(img`
     . . c c c c . . 
@@ -168,12 +164,12 @@ mole = sprites.create(img`
     c e e 4 4 e e c 
     c e e e e e e c 
     `, SpriteKind.Enemy)
-let statusbar = statusbars.create(20, 4, StatusBarKind.Health)
+statusbar = statusbars.create(20, 4, StatusBarKind.Health)
 statusbar.setColor(2, 1)
 statusbar.attachToSprite(mole)
-for (let index = 0; index < 10; index++) {
+while (!(statusbar.value == 0)) {
     mole.setPosition(randint(1, 160), randint(80, 120))
 }
-game.onUpdateInterval(100, function () {
+game.onUpdateInterval(1000, function () {
     info.changeScoreBy(1)
 })
